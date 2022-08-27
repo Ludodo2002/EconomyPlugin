@@ -26,12 +26,13 @@ public class ResetCommand extends CoinCommand {
     }
 
     private void execute(CommandContext<CommandSender> context) {
-        final CommandSender sender = context.getSender();
-        final Optional<Player> optionalPlayer = context.getOptional("player");
+        CommandSender sender = context.getSender();
+        Optional<Player> optionalPlayer = context.getOptional("player");
 
         if(optionalPlayer.isPresent()){
             Player player = optionalPlayer.get();
-            sender.sendMessage("Information : " + player.getName());
+            Main.getApis().getAccount(player.getName(),player.getUniqueId().toString()).setMoney(0.0);
+            sender.sendMessage(Main.PREFIX + "Vous venez de reset l'argent de " + player.getName());
         }
     }
 }

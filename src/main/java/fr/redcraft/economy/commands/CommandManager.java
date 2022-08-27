@@ -37,6 +37,7 @@ public final class CommandManager extends PaperCommandManager<CommandSender> {
             this.registerAsynchronousCompletions();
 
         ImmutableList.of(
+                new TopCommand(plugin,this),
                 new ResetCommand(plugin,this),
                 new RemoveCommand(plugin,this),
                 new AddCommand(plugin,this),

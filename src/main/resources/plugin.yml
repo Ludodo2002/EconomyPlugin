@@ -5,3 +5,10 @@ api-version: 1.19
 authors: [ Redcraft ]
 softdepend: [Vault]
 description: Economy plugin pour ElementaryOddyssey
+commands:
+  money:
+  baltop:
+  pay:
+  trade:
+  shop:
+  serverbank:

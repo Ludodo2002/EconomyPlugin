@@ -17,9 +17,9 @@ import java.util.stream.Collectors;
 
 public class HelpCommand extends CoinCommand {
 
-    private final MinecraftHelp<CommandSender> minecraftHelp;
+    private MinecraftHelp<CommandSender> minecraftHelp;
 
-    public HelpCommand(final @NonNull Main plugin, final @NonNull CommandManager commandManager) {
+    public HelpCommand(@NonNull Main plugin, @NonNull CommandManager commandManager) {
         super(plugin, commandManager);
         this.minecraftHelp = new MinecraftHelp<>(
                 "/coin help",
@@ -39,12 +39,12 @@ public class HelpCommand extends CoinCommand {
     @Override
     public void register() {
         //used to suggest commands as arguments
-        final CommandHelpHandler<CommandSender> commandHelpHandler = this.commandManager.createCommandHelpHandler();
-        final CommandArgument<CommandSender, String> helpQueryArgument = StringArgument.<CommandSender>newBuilder("query")
+        CommandHelpHandler<CommandSender> commandHelpHandler = this.commandManager.createCommandHelpHandler();
+        CommandArgument<CommandSender, String> helpQueryArgument = StringArgument.<CommandSender>newBuilder("query")
                 .greedy()
                 .asOptional()
                 .withSuggestionsProvider((context, input) -> {
-                    final CommandHelpHandler.IndexHelpTopic<CommandSender> indexHelpTopic = (CommandHelpHandler.IndexHelpTopic<CommandSender>) commandHelpHandler.queryHelp(context.getSender(), "");
+                    CommandHelpHandler.IndexHelpTopic<CommandSender> indexHelpTopic = (CommandHelpHandler.IndexHelpTopic<CommandSender>) commandHelpHandler.queryHelp(context.getSender(), "");
                     return indexHelpTopic.getEntries()
                             .stream()
                             .map(CommandHelpHandler.VerboseHelpEntry::getSyntaxString)
@@ -59,7 +59,7 @@ public class HelpCommand extends CoinCommand {
                         .handler(this::executeHelp));
     }
 
-    private void executeHelp(final @NonNull CommandContext<CommandSender> context) {
+    private void executeHelp(@NonNull CommandContext<CommandSender> context) {
         this.minecraftHelp.queryCommands(
                 context.<String>getOptional("query").orElse(""),
                 context.getSender()

@@ -30,19 +30,14 @@ public class AddCommand extends CoinCommand {
     }
 
     private void execute(CommandContext<CommandSender> context) {
-        final CommandSender sender = context.getSender();
-        final Optional<Player> optionalPlayer = context.getOptional("player");
+        CommandSender sender = context.getSender();
+        Optional<Player> optionalPlayer = context.getOptional("player");
         double coin = context.get("Integer");
 
         if(optionalPlayer.isPresent()){
             Player player = optionalPlayer.get();
-           EconomyResponse economyResponse = Main.getVaultManager().getEconomy().depositPlayer(player.getName(),coin);
-           if(economyResponse.transactionSuccess()){
-               sender.sendMessage(Main.PREFIX + " Vous venez d'ajouter " + coin + " ₡ à " + player.getName());
-           }else {
-               sender.sendMessage("§cErreur : " + economyResponse.errorMessage);
-           }
-
+            plugin.getAPI().getAccount(player.getName(),player.getUniqueId().toString()).deposit(coin);
+            sender.sendMessage(Main.PREFIX + " Vous venez d'ajouter " + coin + " ₡ à " + player.getName());
         }
     }
 }

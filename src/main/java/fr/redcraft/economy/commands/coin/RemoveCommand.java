@@ -28,13 +28,13 @@ public class RemoveCommand extends CoinCommand {
     }
 
     private void execute(CommandContext<CommandSender> context) {
-        final CommandSender sender = context.getSender();
-        final Optional<Player> optionalPlayer = context.getOptional("player");
+        CommandSender sender = context.getSender();
+        Optional<Player> optionalPlayer = context.getOptional("player");
         int coin = context.get("Integer");
 
         if(optionalPlayer.isPresent()){
             Player player = optionalPlayer.get();
-            Main.getVaultManager().getEconomy().withdrawPlayer(player,Double.valueOf(String.valueOf(coin)));
+            plugin.getAPI().getAccount(player.getName(),player.getUniqueId().toString()).withdraw(coin);
             sender.sendMessage(Main.PREFIX + " Vous venez d'enlever " + coin + " ₡ à " + player.getName());
         }
     }
